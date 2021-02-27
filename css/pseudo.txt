@@ -1,0 +1,53 @@
+// State Variables
+board // 2D array of (null, 1, or 2)
+isGameOver // boolean to know if active game or it has ended
+player // integer representing who is the active player
+activeColumn // integer value set if mouse is hovered over a column
+
+// Cached elements
+boardEl // the entire board
+crownEl // the space above the board
+msgEl // message to indicate who has won
+
+// Eventlisteners
+boardEl -> calls dropChip() on click
+boardEl -> calls showActive() on hover-over
+crownEl -> calls dropChip() on click
+
+call init()
+
+init function
+    * build-up board as 2D array with values of null
+    * assign 1 to player
+    * assign false to isGameOver
+    * call render()
+
+render function
+    if not isGameOver
+        if boardEl has no children
+            * loop over board and build the columns and cells of divs for board
+            * each div gets id of 'x,y' of board
+            * each cell should be empty (same color as background)
+        else
+            * loop through board and update color values
+            * if activeColumn, then make outline around column and gradient glow in crown and show chip above
+    else
+        * loop through board, update color values and outline winning chips
+        * update and display msgEl
+
+showActive function 
+    * get y coordinate of element hovered over
+    * if board array[y] is not full make column active
+
+dropChip function
+    * push player value to lowest empty index in column
+    * call checkForWin(board[y][x])
+
+checkForWin function (space, direction, soFar)
+    * variable inRow = soFar || 1
+
+    if has direction and space in direction is same player value
+        call checkForWin(space in direction, direction, soFar + 1)
+    else
+        loop through possible directions and if space is same player value
+            call checkForWin(space in direction, direction, soFar + 1)
