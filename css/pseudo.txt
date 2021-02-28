@@ -29,6 +29,7 @@ render function
             * loop over board and build the columns and cells of divs for board
             * each div gets id of 'x,y' of board
             * each cell should be empty (same color as background)
+            * give crown a div child for each column
         else
             * loop through board and update color values
             * if activeColumn, then make outline around column and gradient glow in crown and show chip above

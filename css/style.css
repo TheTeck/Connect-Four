@@ -1,3 +1,9 @@
+:root {
+    --bg-color: rgb(103, 58, 207);
+    --p1-color: red;
+    --p2-color: black;
+}
+
 * {
     box-sizing: border-box;
     padding: 0;
@@ -7,22 +13,25 @@
 body {
     width: 100%;
     height: 100vh;
+    background: var(--bg-color);
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    position: relative;
 }
 
 #crown {
     width: 700px;
     height: 100px;
-    background: peru;
+    display: flex;
 }
 
 #board {
     width: 700px;
     height: 600px;
     background: rgb(10, 85, 78);
+    display: flex;
 }
 
 #base {
@@ -31,4 +40,45 @@ body {
     border-top-left-radius: 20px;
     border-top-right-radius: 20px;
     background: rgb(10, 85, 78);
+}
+
+#msg {
+    width: 600px;
+    height: 200px;
+    position: absolute;
+}
+
+.column {
+    width: 100px;
+    height: 600px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.emptyCell {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: var(--bg-color);
+}
+
+.player1Cell {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: var(--p1-color);
+}
+
+.player2Cell {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: var(--p2-color);
+}
+
+.column_crown {
+    width: 100px;
+    height: 100px;
 }
