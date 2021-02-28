@@ -12,8 +12,8 @@ const msgEl = document.getElementById('msg')
 
 // Event Listeners
 boardEl.addEventListener('click', dropChip)
-boardEl.addEventListener('pointerover', showActive)
-boardEl.addEventListener('pointerout', hideActive)
+boardEl.addEventListener('mouseover', setActive)
+boardEl.addEventListener('mouseleave', removeActive)
 crownEl.addEventListener('click', dropChip)
 
 init()
@@ -40,6 +40,8 @@ function init () {
     // Game is not over at first
     isGameOver = false
 
+    activeColumn = null
+
     render()
 }
 
@@ -61,6 +63,7 @@ function render () {
                 const crown = document.createElement('div')
                 crown.setAttribute('id', `crown_${x_index}`)
                 crown.classList.add('column_crown')
+                crown.style.visibility = 'hidden'
                 crownEl.appendChild(crown)
 
                 board[0].forEach((r, y_index) => {
@@ -78,27 +81,53 @@ function render () {
                     document.getElementById(`${x_index},${y_index}`).className = r
                 })
             })
+
+            const childArray = Array.from(crownEl.childNodes)
+            childArray.forEach(node => {
+                node.style.visibility = 'hidden'
+            })
+
+            if (activeColumn !== null) {
+                const activeCrown = document.getElementById(`crown_${activeColumn}`)
+                activeCrown.style.visibility = 'visible'
+            }
         }
     } else {
 
     }
 }
 
-function showActive (e) {
+/////////////////////////////////////////////////////////////////////////
+//////////     Define which column mouse is hoving over    /////////////
+///////////////////////////////////////////////////////////////////////
+function setActive (e) {
     if (e.target.className === "emptyCell" || "player1Cell" || "player2Cell")
-        e.target.parentNode.style.border = "1px solid gold"
+        activeColumn = +e.target.id.split(',')[0]
     else 
-        e.target.style.border = "1px solid gold"
+        activeColumn = +e.target.id
     render()
 }
 
-function hideActive (e) {
-    e.target.style.border = "none"
+///////////////////////////////////////////////////////////////
+//////////     Removes the activeColumn value    /////////////
+/////////////////////////////////////////////////////////////
+function removeActive () {
+    activeColumn = null
     render()
 }
 
+//////////////////////////////////////////////////////////////////////////////////
+//////////     Drops chips to lowest position and switched player   /////////////
+////////////////////////////////////////////////////////////////////////////////
 function dropChip () {
-
+    if (board[activeColumn][board[0].length-1] === 'emptyCell') {
+        const lowestIndex = board[activeColumn].findIndex(element => {
+            return element === 'emptyCell'
+        })
+        board[activeColumn][lowestIndex] = `player${player}Cell`
+        player = player === 1 ? 2 : 1
+        render()
+    }
 }
 
 function checkForWin () {
