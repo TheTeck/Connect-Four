@@ -3,6 +3,7 @@ board // 2D array of (null, 1, or 2)
 isGameOver // boolean to know if active game or it has ended
 player // integer representing who is the active player
 activeColumn // integer value set if mouse is hovered over a column
+winningFour // array to hold the x and y of each winning chip
 
 // Cached elements
 boardEl // the entire board
@@ -32,7 +33,7 @@ render function
             * loop through board and update color values
             * if activeColumn, then make outline around column and gradient glow in crown and show chip above
     else
-        * loop through board, update color values and outline winning chips
+        * loop through board, update color values and outline winning chips from winning array
         * update and display msgEl
 
 showActive function 
@@ -43,11 +44,17 @@ dropChip function
     * push player value to lowest empty index in column
     * call checkForWin(board[y][x])
 
-checkForWin function (space, direction, soFar)
-    * variable inRow = soFar || 1
+checkForWin function (space, direction)
 
-    if has direction and space in direction is same player value
-        call checkForWin(space in direction, direction, soFar + 1)
-    else
-        loop through possible directions and if space is same player value
+    winning[] push array of x and y of space
+
+    if winning length is less than 4
+        if has direction and space in direction is same player value
             call checkForWin(space in direction, direction, soFar + 1)
+        else if not same player value
+            winning is assign empty array
+        else
+            loop through possible directions and if space is same player value
+                call checkForWin(space in direction, direction, soFar + 1)
+    else there is a connected four chips
+        * set isGameOver to true
